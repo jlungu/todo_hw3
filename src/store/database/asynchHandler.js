@@ -33,3 +33,18 @@ export const registerHandler = (newUser, firebase) => (dispatch, getState, { get
         dispatch(actionCreators.registerError);
     });
 };
+
+
+//Creating a new TodoList, and adding it to our database.
+export const createNewListHandler = (firebase) => (dispatch, getState, {getFirestore}) => {
+    const firestore = getFirestore();
+    firestore.collection('todoLists').add({
+        name: "Unknown",
+        owner: "Unknown",
+        items: [],
+    }).then(() => {
+      dispatch(actionCreators.registerSuccess);
+    }).catch((err) => {
+      dispatch(actionCreators.registerError);
+    });
+};
