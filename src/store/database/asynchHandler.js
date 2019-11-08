@@ -2,7 +2,7 @@ import * as actionCreators from '../actions/actionCreators.js'
 
 export const loginHandler = ({ credentials, firebase }) => (dispatch, getState) => {
     firebase.auth().signInWithEmailAndPassword(
-      credentials.email,
+      credentials.email,//returns a promise, and you can wait on it before proceeding. Calls the function when it completes.
       credentials.password,
     ).then(() => {
       console.log("LOGIN_SUCCESS");
@@ -42,9 +42,9 @@ export const createNewListHandler = (firebase) => (dispatch, getState, {getFires
         name: "Unknown",
         owner: "Unknown",
         items: [],
-    }).then(() => {
-      dispatch(actionCreators.registerSuccess);
+    }).then(function(docRef){console.log("Newly Created Document ID: " + docRef.id)}).then(() => {
+      dispatch(actionCreators.createTodoList);
     }).catch((err) => {
-      dispatch(actionCreators.registerError);
+      dispatch({ type: 'CREATE_TODO_LIST_ERROR', err });
     });
 };
