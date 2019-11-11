@@ -48,3 +48,23 @@ export const createNewListHandler = (firebase) => (dispatch, getState, {getFires
       dispatch({ type: 'CREATE_TODO_LIST_ERROR', err });
     });
 };
+
+export const editNameHandler = (newName, id, firebase) => (dispatch, getState, {getFirestore}) => {
+    const firestore = getFirestore();
+    firestore.collection('todoLists').doc(id).update({
+      name: newName,
+    }).catch((err) => {
+      dispatch({ type: 'CREATE_TODO_LIST_ERROR', err });
+    });
+    
+  }
+
+  export const editOwnerHandler = (newOwner, id, firebase) => (dispatch, getState, {getFirestore}) => {
+    const firestore = getFirestore();
+    firestore.collection('todoLists').doc(id).update({
+      owner: newOwner,
+    }).catch((err) => {
+      dispatch({ type: 'CREATE_TODO_LIST_ERROR', err });
+    });
+    
+  }

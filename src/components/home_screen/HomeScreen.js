@@ -18,13 +18,11 @@ class HomeScreen extends Component {
   };
 
 
-
   render() {
     if (!this.props.auth.uid) {
       return <Redirect to="/login" />;
     }
 
- 
   
 
     return (
