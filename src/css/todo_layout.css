@@ -51,3 +51,12 @@ input[type=password]:not(.browser-default):focus:not([readonly]) + label{
 #addNewListButton{
   margin-left: 47%;
 }
+#item_card_due_date{
+  margin-top: 23px;
+  font-size: 20px;
+
+}
+#item_card_completed{
+  margin-top: 23px;
+  font-size: 20px;
+}
