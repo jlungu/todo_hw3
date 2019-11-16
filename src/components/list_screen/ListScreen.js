@@ -44,14 +44,27 @@ class ListScreen extends Component {
         return (
             <div className="container white">
                 <h5 className="grey-text text-darken-3">Todo List</h5>
-                <div className="input-field">
-                    <label>Name</label>
-                    <input className="active" type="text" name="name" id="name" onChange={this.handleChange} defaultValue={todoList.name} onBlur={this.changeName}/>               
+                <div class="input-field col s6">
+                    <input className="active" type="text" name="name" id="name" onChange={this.handleChange} defaultValue={todoList.name} onBlur={this.changeName}/> 
+                    <label class="active" for="name">Name</label>             
                 </div>
                 <div className="input-field">
-                    <label>Owner</label>
-                    <input className="active" type="text" name="owner" id="owner" onChange={this.handleChange} defaultValue ={todoList.owner} onBlur={this.changeOwner}/>                   
+                    <input className="active" type="text" name="owner" id="owner" onChange={this.handleChange} defaultValue ={todoList.owner} onBlur={this.changeOwner}/>    
+                    <label class="active" for="owner">Owner</label>               
                 </div>
+                
+ 
+                <nav>
+    <div class="nav-wrapper">
+      <ul id="nav-mobile" class="center hide-on-med-and-down">
+        <li><a href="sass.html" id="header_type">Name</a></li>
+        <li><a href="badges.html" id="header_type">Due Date</a></li>
+        <li><a href="collapsible.html" id="header_type">Completed</a></li>
+      </ul>
+    </div>
+  </nav>
+        
+        
                 <ItemsList todoList={todoList} />
             </div>
         );
