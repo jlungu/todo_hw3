@@ -66,5 +66,13 @@ export const editNameHandler = (newName, id, firebase) => (dispatch, getState, {
     }).catch((err) => {
       dispatch({ type: 'CREATE_TODO_LIST_ERROR', err });
     });
-    
+  }
+
+  export const submitItemChangeHandler = (id, newItems, firebase) => (dispatch, getState, {getFirestore}) => {
+    const firestore = getFirestore();
+    firestore.collection('todoLists').doc(id).update({
+      items: newItems,
+    }).catch((err) => {
+      dispatch({ type: 'CREATE_TODO_LIST_ERROR', err });
+    });
   }
