@@ -60,3 +60,7 @@ input[type=password]:not(.browser-default):focus:not([readonly]) + label{
   margin-top: 23px;
   font-size: 20px;
 }
+.floating_button {
+  position: relative !important;
+  z-index: 50;
+ }

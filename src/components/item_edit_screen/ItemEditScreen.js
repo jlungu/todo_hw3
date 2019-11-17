@@ -50,7 +50,7 @@ class ItemEditScreen extends Component {
   };
 
   updateCompleted = e => {
-    this.setState({ completed: e.target.value });
+      this.setState({ completed: e.target.checked });
   };
 
   returnToList = () => {
@@ -76,6 +76,7 @@ class ItemEditScreen extends Component {
       item.description = this.state.description;
       item.due_date = this.state.due_date;
       item.completed = this.state.completed;
+      item.key = this.props.match.params.key;
       newItems.push(item);
     }
 
@@ -89,8 +90,7 @@ class ItemEditScreen extends Component {
     if (this.state.editList == false) {
       return <Redirect to={"/todoList/" + todoList.id} />;
     }
-    return (
-      
+    return (      
       <div className="container white">
         <h5 className="grey-text text-darken-3">Edit Item</h5>
         <div class="input-field col s6">
