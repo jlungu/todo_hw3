@@ -63,4 +63,12 @@ input[type=password]:not(.browser-default):focus:not([readonly]) + label{
 .floating_button {
   position: relative !important;
   z-index: 50;
+  top: 20px;
+  left: 15% !important;
+ }
+ .delete_but{
+   float:right !important;
+  margin-top: 2%;
+  margin-right: 2%;
+   z-index: 20;
  }

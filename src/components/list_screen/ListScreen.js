@@ -6,13 +6,22 @@ import ItemsList from "./ItemsList.js";
 import { firestoreConnect } from "react-redux-firebase";
 import { editNameHandler } from "../../store/database/asynchHandler";
 import { editOwnerHandler } from "../../store/database/asynchHandler";
+import "materialize-css/dist/css/materialize.min.css";
+import M from "materialize-css/dist/js/materialize.min.js";
+import DeleteListModal from "./DeleteListModal.js"
 
 class ListScreen extends Component {
   state = {
     name: "",
-    owner: "",
+    owner: ""
   };
 
+  componentDidMount = options => {
+    document.addEventListener('DOMContentLoaded', function() {
+      var elems = document.querySelectorAll('.modal');
+      var instances = M.Modal.init(elems, options);
+    });
+  };
 
   handleChange = e => {
     const { target } = e;
@@ -35,7 +44,6 @@ class ListScreen extends Component {
     this.props.editOwner(target.value, this.props.todoList.id, firebase);
   };
 
-
   render() {
     const auth = this.props.auth;
     const todoList = this.props.todoList;
@@ -45,7 +53,16 @@ class ListScreen extends Component {
 
     return (
       <div className="container white">
-        <h5 className="grey-text text-darken-3">Todo List</h5>
+        <DeleteListModal />
+        <div class="row">
+          <h5 className="grey-text text-darken-3 col s2">Todo List</h5>
+          <a
+            data-target="modal1"
+            class="btn-floating btn-large waves-effect waves-light red delete_but col s0 btn modal-trigger"
+          >
+            <i class="material-icons">delete</i>
+          </a>
+        </div>
         <div class="input-field col s6">
           <input
             className="active"

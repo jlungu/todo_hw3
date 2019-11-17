@@ -154,7 +154,7 @@ class ItemsList extends React.Component {
     return (
       <div className="todo-lists section">
         <nav>
-          <div class="nav-wrapper">
+          <div class="nav-wrapper red">
             <ul id="nav-mobile" class="center hide-on-med-and-down">
               <li>
                 <span id="header_type" onClick={this.sortByTask}>
