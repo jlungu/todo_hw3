@@ -89,8 +89,8 @@ class ItemEditScreen extends Component {
     if (this.state.editList == false) {
       return <Redirect to={"/todoList/" + todoList.id} />;
     }
-
     return (
+      
       <div className="container white">
         <h5 className="grey-text text-darken-3">Edit Item</h5>
         <div class="input-field col s6">
@@ -121,8 +121,8 @@ class ItemEditScreen extends Component {
         </div>
         <div class="input-field col s6">
           <input
-            className="active"
-            type="text"
+            class="datepicker"
+            type="date"
             name="due_date"
             id="due_date"
             defaultValue={this.state.due_date}
