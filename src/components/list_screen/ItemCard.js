@@ -24,21 +24,6 @@ class ItemCard extends React.Component {
     });
   };
 
-  moveItemUp = () => {
-    let items = this.props.todoList.items;
-    const { firebase } = this.props;
-    let index = this.props.item.key;
-
-    if (index === 0) return;
-
-    let item = items[index];
-    let temp = items[index - 1];
-    items[index - 1] = item;
-    items[index] = temp;
-
-    this.props.submitItemChange(this.props.todoList.id, items, firebase);
-  };
-
   render() {
     const { item, todoList } = this.props;
 
@@ -46,7 +31,7 @@ class ItemCard extends React.Component {
       this.props.history.push("/");
     }
     return (
-      <div className="card z-depth-0 todo-list-link pink-lighten-3 red lighten-5 item_card">
+      <div className="card z-depth-1 todo-list-link pink-lighten-3 red lighten-5 item_card">
         <div class="row">
           <Link to={"/todoList/" + todoList.id + "/items/" + item.key}>
             <div class="col s4">
@@ -64,10 +49,34 @@ class ItemCard extends React.Component {
               {item.completed ? "Completed" : "Incompleted"}
             </div>
           </Link>
-          <Button floating fab={{}} className="floating_button" large>
-            <Button floating className="red" />
-            <Button floating className="yellow darken-1" />
-            <Button floating className="green" />
+          <Button
+            floating
+            fab={{ direction: "left" }}
+            className="floating_button red"
+            id="floating_button"
+            large
+          >
+            <Button
+              floating
+              className="red"
+              onClick={this.props.moveItemUp.bind(this, item)}
+            >
+              <i class="material-icons">arrow_upward</i>
+            </Button>
+            <Button
+              floating
+              className="yellow darken-1"
+              onClick={this.props.moveItemDown.bind(this, item)}
+            >
+              <i class="material-icons">arrow_downward</i>
+            </Button>
+            <Button
+              floating
+              className="green"
+              onClick={this.props.deleteItem.bind(this, item)}
+            >
+              <i class="material-icons">close</i>
+            </Button>
           </Button>
         </div>
       </div>

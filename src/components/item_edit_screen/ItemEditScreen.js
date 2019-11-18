@@ -8,33 +8,44 @@ import { submitItemChangeHandler } from "../../store/database/asynchHandler";
 
 class ItemEditScreen extends Component {
   state = {
-    item: this.props.todoList.items[this.props.match.params.key],
+    item: "this.props.todoList.items[this.props.match.params.key]",
     editList: true,
-    newItem:
-      this.props.match.params.key != this.props.todoList.items.length
-        ? true
-        : false,
-    description:
-      this.props.match.params.key != this.props.todoList.items.length
-        ? this.props.todoList.items[this.props.match.params.key].description
-        : "",
-    assigned_to:
-      this.props.match.params.key != this.props.todoList.items.length
-        ? this.props.todoList.items[this.props.match.params.key].assigned_to
-        : "",
-    due_date:
-      this.props.match.params.key != this.props.todoList.items.length
-        ? this.props.todoList.items[this.props.match.params.key].due_date
-        : "",
-    completed:
-      this.props.match.params.key != this.props.todoList.items.length
-        ? this.props.todoList.items[this.props.match.params.key].completed
-        : false
+    newItem: false,
+    description: "",
+    assigned_to: "",
+    due_date: "",
+    completed: false
   };
 
   componentDidMount() {
     this.setState({ editList: true });
     this.setState({ newItem: false });
+    const auth = this.props.auth;
+    if (!auth.uid) {
+      return ;
+    }
+    this.setState({item: this.props.todoList.items[this.props.match.params.key],
+      editList: true,
+      newItem:
+        this.props.match.params.key != this.props.todoList.items.length
+          ? true
+          : false,
+      description:
+        this.props.match.params.key != this.props.todoList.items.length
+          ? this.props.todoList.items[this.props.match.params.key].description
+          : "",
+      assigned_to:
+        this.props.match.params.key != this.props.todoList.items.length
+          ? this.props.todoList.items[this.props.match.params.key].assigned_to
+          : "",
+      due_date:
+        this.props.match.params.key != this.props.todoList.items.length
+          ? this.props.todoList.items[this.props.match.params.key].due_date
+          : "",
+      completed:
+        this.props.match.params.key != this.props.todoList.items.length
+          ? this.props.todoList.items[this.props.match.params.key].completed
+          : false});
   }
 
   updateDescription = e => {
@@ -88,16 +99,21 @@ class ItemEditScreen extends Component {
   };
 
   render() {
+    const auth = this.props.auth;
+    if (!auth.uid) {
+      return <Redirect to="/" />;
+    }
     const todoList = this.props.todoList;
+   
     const item = todoList.items[this.props.match.params.key];
     if (this.state.editList == false) {
       return <Redirect to={"/todoList/" + todoList.id} />;
     }
     return (
       <div className="container">
-        <div className="card z-depth-0 todo-list-link pink-lighten-3 blue lighten-5">
+        <div className="card z-depth-1 todo-list-link pink-lighten-3 blue lighten-5">
           <div
-            className="card z-depth-1 todo-list-link pink-lighten-3 blue"
+            className="card z-depth-0 todo-list-link pink-lighten-3 blue"
             id="edit_header"
           >
             <div class="card-content white-text" id="the_id_thing">
@@ -186,17 +202,19 @@ const mapStateToProps = (state, ownProps) => {
   const { id } = ownProps.match.params;
   const { todoLists } = state.firestore.data;
   const todoList = todoLists ? todoLists[id] : null;
-  todoList.id = id;
+  if (todoList) todoList.id = id;
 
   return {
     todoList,
     auth: state.firebase.auth
   };
 };
+
 const mapDispatchToProps = (dispatch, newItems, firebase) => ({
   submitItemChange: (id, newItems, firebase) =>
     dispatch(submitItemChangeHandler(id, newItems, firebase))
 });
+
 export default compose(
   connect(mapStateToProps, mapDispatchToProps),
   firestoreConnect([{ collection: "todoLists" }])

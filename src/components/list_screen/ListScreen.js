@@ -33,12 +33,16 @@ class ListScreen extends Component {
   };
 
   changeName = e => {
+    if (e.target.value === "")
+      return;
     const { target } = e;
     const { firebase } = this.props;
     this.props.editName(target.value, this.props.todoList.id, firebase);
   };
 
   changeOwner = e => {
+    if (e.target.value === "")
+      return;
     const { target } = e;
     const { firebase } = this.props;
     this.props.editOwner(target.value, this.props.todoList.id, firebase);
@@ -55,7 +59,7 @@ class ListScreen extends Component {
     return (
       <div className="container">
         <DeleteListModal id={this.props.todoList.id} />
-        <div className="card z-depth-0 todo-list-link pink-lighten-3 green lighten-5">
+        <div className="card z-depth-1 todo-list-link pink-lighten-3 green lighten-5">
           <div class="row">
             <h5 className="grey-text text-darken-3 col s3">My Todo-List</h5>
             <a
@@ -69,17 +73,20 @@ class ListScreen extends Component {
           <div class="row">
             <div class="input-field col s6">
               <input
-                className="active"
                 type="text"
                 name="name"
                 id="name"
                 onChange={this.handleChange}
                 defaultValue={todoList.name}
                 onBlur={this.changeName}
+                required
+                aria-required="true"
+                class="validate"
               />
               <label class="active" for="name">
                 Name
               </label>
+              <span class="helper-text" data-error="One or more characters required"></span>
             </div>
             <div className="input-field col s6 main_input">
               <input
@@ -90,10 +97,14 @@ class ListScreen extends Component {
                 onChange={this.handleChange}
                 defaultValue={todoList.owner}
                 onBlur={this.changeOwner}
+                required
+                aria-required="true"
+                class="validate"
               />
               <label class="active" for="owner">
                 Owner
               </label>
+              <span class="helper-text" data-error="One or more characters required"></span>
             </div>
           </div>
         </div>

@@ -4,6 +4,7 @@ import { compose } from "redux";
 import ItemCard from "./ItemCard";
 import { Redirect } from "react-router-dom";
 import { firestoreConnect } from "react-redux-firebase";
+import { submitItemChangeHandler } from "../../store/database/asynchHandler";
 
 const SortingCriteria = {
   TASK_INCREASING: "TASK_INCREASING",
@@ -17,7 +18,7 @@ const SortingCriteria = {
 class ItemsList extends React.Component {
   state = {
     newElement: false,
-    todoList: this.props.todoList.items,
+    todoList: this.props.todoList,
     sortingCriteria: null,
     refresh: false,
   };
@@ -26,7 +27,9 @@ class ItemsList extends React.Component {
     this.setState({ newElement: true });
   };
 
-
+  componentDidMount = () => {
+    this.resetKeys();
+  }
 
   sortByTask = () => {
     if (this.state.sortingCriteria === SortingCriteria.TASK_INCREASING)
@@ -101,9 +104,8 @@ class ItemsList extends React.Component {
   };
 
   goSortItems = () => {
-    this.setState({todoList: this.state.todoList.sort(this.compare.bind(this))});
-    this.render();
-    console.log(this.state.todoList)
+    this.state.todoList.items.sort(this.compare.bind(this));
+    this.resetKeys();
   };
 
   compare(item1, item2) {
@@ -147,15 +149,64 @@ class ItemsList extends React.Component {
     this.forceUpdate();
   }
 
+  moveItemUp = (item) => {
+    console.log(this.state.todoList.items)
+    let todo = this.state.todoList;
+    let index = item.key;
+
+    if (index === 0) return;
+
+    let temp = todo.items[index - 1];
+    todo.items[index - 1] = item;
+    todo.items[index] = temp;
+
+    this.setState({todoList: todo});
+    this.resetKeys();
+    console.log(todo)
+    
+  };
+
+  moveItemDown = (item) => {
+    let todo = this.state.todoList;
+    let index = item.key;
+
+    if (index === todo.items.length-1) return;
+
+    let temp = todo.items[index + 1];
+    todo.items[index + 1] = item;
+    todo.items[index] = temp;
+
+    this.setState({todoList: todo});
+    this.resetKeys();
+  };
+
+  deleteItem = (item) => {
+    let items = this.props.todoList.items;
+
+    this.state.todoList.items = [
+      ...this.state.todoList.items.filter(i => i.key !== item.key)
+    ];
+
+    //this.setState({todoList: items});
+    this.resetKeys();
+  };
+
+  resetKeys = () => {
+    for (let i = 0; i < this.state.todoList.items.length; i++) {
+      this.state.todoList.items[i].key = i;
+    }
+    const { firebase } = this.props;
+    this.props.submitItemChange(this.state.todoList.id, this.state.todoList.items, firebase);
+  };
+
   render() {
-    const todoList = this.props.todoList;
-    const items = this.state.todoList;
+    const todoList = this.state.todoList;
     console.log("ItemsList: todoList.id " + todoList.id);
 
     if (this.state.newElement) {
       return (
         <Redirect
-          to={"/todoList/" + todoList.id + "/items/" + todoList.items.length}
+          to={"/todoList/" + this.props.todoList.id + "/items/" + this.props.todoList.items.length}
         />
       );
     }
@@ -189,11 +240,9 @@ class ItemsList extends React.Component {
           </div>
         </nav>
 
-        {items &&
-          items.map(function(item) {
-            item.id = item.key;
-            return <ItemCard todoList={todoList} item={item} />;
-          })}
+        {this.state.todoList.items.map((todoItem)=>(
+            <ItemCard todoList={this.state.todoList} item={todoItem} moveItemUp={this.moveItemUp} moveItemDown={this.moveItemDown} deleteItem={this.deleteItem}/>
+          ))}
         <a
           class="btn-floating btn-large waves-effect waves-light red"
           id="addNewListButton"
@@ -214,7 +263,12 @@ const mapStateToProps = (state, ownProps) => {
   };
 };
 
+const mapDispatchToProps = (dispatch, id, newItems, firebase) => ({
+  submitItemChange: (id, newItems, firebase) =>
+    dispatch(submitItemChangeHandler(id, newItems, firebase))
+});
+
 export default compose(
-  connect(mapStateToProps),
+  connect(mapStateToProps, mapDispatchToProps),
   firestoreConnect([{ collection: "todoLists" }])
 )(ItemsList);

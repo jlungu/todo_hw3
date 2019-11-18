@@ -7,7 +7,7 @@ export const loginHandler = ({ credentials, firebase }) => (dispatch, getState) 
       credentials.password,
     ).then(() => {
       console.log("LOGIN_SUCCESS");
-      dispatch({ type: 'LOGIN_SUCCESS' });      
+      dispatch({ type: 'LOGIN_SUCCESS' });    
     }).catch((err) => {
       dispatch({ type: 'LOGIN_ERROR', err });
     });
