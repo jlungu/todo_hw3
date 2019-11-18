@@ -11,7 +11,13 @@ class HomeScreen extends Component {
   state ={
     newList: false,
     id: null,
+    firstTodo: null,
   }
+    
+  updateId = (id) => {
+    this.setState({id: id});
+  }
+
   handleSubmit = e => {
     e.preventDefault();
 
@@ -31,6 +37,12 @@ class HomeScreen extends Component {
     this.setState({newList: true});
   };
 
+  updateFirstTodo = (newTodo) => {
+    console.log.apply(this.props.todoList);
+  }
+
+
+
 
   render() {
     if (!this.props.auth.uid) {
@@ -39,13 +51,13 @@ class HomeScreen extends Component {
     if (this.state.newList){
       return <Redirect to={'/todoList/' + this.state.id} key={this.state.id}/>;
     }
-  
 
+   {this.updateFirstTodo()}
     return (
       <div className="dashboard container">
         <div className="row">
           <div className="col s12 m4">
-            <TodoListLinks />
+            <TodoListLinks firstTodo={this.state.firstTodo} updateFirstTodo={this.updateFirstTodo} updateId={this.updateId}/>
           </div>
 
           <div className="col s8">
@@ -57,13 +69,13 @@ class HomeScreen extends Component {
 
             <div className="home_new_list_container">
               <Link to={"/todoList/"}>
-                <button
+                <a class="waves-effect waves-light btn-large orange"
                   type="submit"
-                  className="home_new_list_button"
+                  id="create_list"
                   onClick={this.handleSubmit}
                 >
                   Create a New To Do List
-                </button>
+                </a>
               </Link>
             </div>
           </div>

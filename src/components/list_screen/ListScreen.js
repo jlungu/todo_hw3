@@ -6,6 +6,7 @@ import ItemsList from "./ItemsList.js";
 import { firestoreConnect } from "react-redux-firebase";
 import { editNameHandler } from "../../store/database/asynchHandler";
 import { editOwnerHandler } from "../../store/database/asynchHandler";
+import { moveCurrentListToTopHandler } from "../../store/database/asynchHandler";
 import "materialize-css/dist/css/materialize.min.css";
 import M from "materialize-css/dist/js/materialize.min.js";
 import DeleteListModal from "./DeleteListModal.js";
@@ -21,7 +22,14 @@ class ListScreen extends Component {
       var elems = document.querySelectorAll(".modal");
       var instances = M.Modal.init(elems, options);
     });
+    this.moveToTop();
   };
+
+  moveToTop = () => {
+    
+    
+    
+  }
 
   handleChange = e => {
     const { target } = e;
@@ -123,6 +131,7 @@ const mapStateToProps = (state, ownProps) => {
 
   return {
     todoList,
+    todoLists: state.firestore.ordered.todoLists,
     auth: state.firebase.auth
   };
 };
@@ -131,7 +140,10 @@ const mapDispatchToProps = (dispatch, newItem) => ({
   editName: (newItem, id, firebase) =>
     dispatch(editNameHandler(newItem, id, firebase)),
   editOwner: (newItem, id, firebase) =>
-    dispatch(editOwnerHandler(newItem, id, firebase))
+    dispatch(editOwnerHandler(newItem, id, firebase)),
+  moveCurrentListToTop: (todoLists, firebase) => 
+    dispatch(moveCurrentListToTopHandler(todoLists, firebase)),
+
 });
 
 export default compose(

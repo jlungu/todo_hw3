@@ -74,9 +74,9 @@ class ItemEditScreen extends Component {
     let item = {};
     const key = this.props.match.params.key;
     if (
-      this.state.assigned_to === "" ||
-      this.state.description === "" ||
-      this.state.due_date === ""
+      document.getElementById("assigned_to").value === "" ||
+      document.getElementById("description").value === "" ||
+      document.getElementById("due_date").value === ""
     ) {
       return;
     }
@@ -129,6 +129,9 @@ class ItemEditScreen extends Component {
                 id="assigned_to"
                 defaultValue={this.state.assigned_to}
                 onChange={this.updateAssignedTo}
+                required
+                aria-required="true"
+                class="validate"
               />
               <label class="active" for="assigned_to">
                 Assigned To
@@ -142,6 +145,9 @@ class ItemEditScreen extends Component {
                 id="description"
                 defaultValue={this.state.description}
                 onChange={this.updateDescription}
+                required
+                aria-required="true"
+                class="validate"
               />
               <label class="active" for="description">
                 Description
@@ -155,6 +161,9 @@ class ItemEditScreen extends Component {
                 id="due_date"
                 defaultValue={this.state.due_date}
                 onChange={this.updateDueDate}
+                required
+                aria-required="true"
+                class="validate"
               />
               <label class="active" for="due_date">
                 Due Date

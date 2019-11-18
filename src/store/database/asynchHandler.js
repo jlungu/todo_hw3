@@ -36,6 +36,8 @@ export const registerHandler = (newUser, firebase) => (dispatch, getState, { get
 };
 
 
+
+
 //Creating a new TodoList, and adding it to our database.
 export const createNewListHandler = (todoList, id, firebase) => (dispatch, getState, {getFirestore}) => {
     const firestore = getFirestore();
@@ -89,5 +91,18 @@ export const editNameHandler = (newName, id, firebase) => (dispatch, getState, {
       dispatch({ type: 'CREATE_TODO_LIST_ERROR', err });
     });
 };
+
+export const moveCurrentListToTopHandler = (todoLists, firebase) => (dispatch, getState, {getFirestore}) => {
+  const firestore = getFirestore();
+  firestore.collection('todoLists').add({
+    todoLists,
+  }
+  ).then(function() {
+    console.log("TodoList moved to top!");
+}).catch((err) => {
+    dispatch({ type: 'CREATE_TODO_LIST_ERROR', err });
+  });
+};
+
 
   

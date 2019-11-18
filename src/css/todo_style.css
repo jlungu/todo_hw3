@@ -57,3 +57,9 @@ div.banner {
 #edit_header_text{
   color: white;
 }
+
+#create_list {
+  font-size: 30px;
+  margin-top: 10px;
+  margin-left: 7%;
+}
