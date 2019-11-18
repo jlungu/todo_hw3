@@ -8,11 +8,13 @@ const initState = {};
 
 const authReducer = (state = initState, action) => {
   switch (action.type) {
-    case actionCreators.LOGIN_ERROR:
+    case actionCreators.LOGIN_ERROR:{
+      console.log(state + " !!!!")
       return {
         ...state,
         authError: 'Login fail',
       };
+    }
     case actionCreators.LOGIN_SUCCESS:
       return {
         ...state,

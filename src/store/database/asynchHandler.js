@@ -7,7 +7,7 @@ export const loginHandler = ({ credentials, firebase }) => (dispatch, getState) 
       credentials.password,
     ).then(() => {
       console.log("LOGIN_SUCCESS");
-      dispatch({ type: 'LOGIN_SUCCESS' });
+      dispatch({ type: 'LOGIN_SUCCESS' });      
     }).catch((err) => {
       dispatch({ type: 'LOGIN_ERROR', err });
     });
@@ -74,8 +74,9 @@ export const editNameHandler = (newName, id, firebase) => (dispatch, getState, {
     firestore.collection('todoLists').doc(id).update({
       items: newItems,
     }).then(() => {
-      dispatch({ type: 'CREATE_TODO_LIST' });
-  }).catch((err) => {
+      //dispatch(actionCreators.createTodoListItem(firestore.collection('todoLists').get()))
+      console.log(firestore.collection('todoLists'))
+    }).catch((err) => {
       dispatch({ type: 'CREATE_TODO_LIST_ERROR', err });
     });
   }

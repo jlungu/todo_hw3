@@ -8,7 +8,7 @@ import { editNameHandler } from "../../store/database/asynchHandler";
 import { editOwnerHandler } from "../../store/database/asynchHandler";
 import "materialize-css/dist/css/materialize.min.css";
 import M from "materialize-css/dist/js/materialize.min.js";
-import DeleteListModal from "./DeleteListModal.js"
+import DeleteListModal from "./DeleteListModal.js";
 
 class ListScreen extends Component {
   state = {
@@ -17,8 +17,8 @@ class ListScreen extends Component {
   };
 
   componentDidMount = options => {
-    document.addEventListener('DOMContentLoaded', function() {
-      var elems = document.querySelectorAll('.modal');
+    document.addEventListener("DOMContentLoaded", function() {
+      var elems = document.querySelectorAll(".modal");
       var instances = M.Modal.init(elems, options);
     });
   };
@@ -50,48 +50,52 @@ class ListScreen extends Component {
     if (!auth.uid) {
       return <Redirect to="/" />;
     }
-    if(!todoList)
-	      return <React.Fragment />
+    if (!todoList) return <React.Fragment />;
 
     return (
-      <div className="container white">
-        <DeleteListModal id={this.props.todoList.id}/>
-        <div class="row">
-          <h5 className="grey-text text-darken-3 col s2">Todo List</h5>
-          <a
-            data-target="modal1"
-            class="btn-floating btn-large waves-effect waves-light red delete_but col s0 btn modal-trigger"
-          >
-            <i class="material-icons">delete</i>
-          </a>
-        </div>
-        <div class="input-field col s6">
-          <input
-            className="active"
-            type="text"
-            name="name"
-            id="name"
-            onChange={this.handleChange}
-            defaultValue={todoList.name}
-            onBlur={this.changeName}
-          />
-          <label class="active" for="name">
-            Name
-          </label>
-        </div>
-        <div className="input-field">
-          <input
-            className="active"
-            type="text"
-            name="owner"
-            id="owner"
-            onChange={this.handleChange}
-            defaultValue={todoList.owner}
-            onBlur={this.changeOwner}
-          />
-          <label class="active" for="owner">
-            Owner
-          </label>
+      <div className="container">
+        <DeleteListModal id={this.props.todoList.id} />
+        <div className="card z-depth-0 todo-list-link pink-lighten-3 green lighten-5">
+          <div class="row">
+            <h5 className="grey-text text-darken-3 col s3">My Todo-List</h5>
+            <a
+              data-target="modal1"
+              class="btn-floating btn-large waves-effect waves-light green delete_but col s0 btn modal-trigger"
+            >
+              <i class="material-icons">delete</i>
+            </a>
+          </div>
+
+          <div class="row">
+            <div class="input-field col s6">
+              <input
+                className="active"
+                type="text"
+                name="name"
+                id="name"
+                onChange={this.handleChange}
+                defaultValue={todoList.name}
+                onBlur={this.changeName}
+              />
+              <label class="active" for="name">
+                Name
+              </label>
+            </div>
+            <div className="input-field col s6 main_input">
+              <input
+                className="active"
+                type="text"
+                name="owner"
+                id="owner"
+                onChange={this.handleChange}
+                defaultValue={todoList.owner}
+                onBlur={this.changeOwner}
+              />
+              <label class="active" for="owner">
+                Owner
+              </label>
+            </div>
+          </div>
         </div>
 
         <ItemsList todoList={this.props.todoList} />
@@ -104,8 +108,7 @@ const mapStateToProps = (state, ownProps) => {
   const { id } = ownProps.match.params;
   const { todoLists } = state.firestore.data;
   const todoList = todoLists ? todoLists[id] : null;
-  if(todoList)
-	todoList.id = id;
+  if (todoList) todoList.id = id;
 
   return {
     todoList,

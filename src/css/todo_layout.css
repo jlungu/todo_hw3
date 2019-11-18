@@ -61,10 +61,10 @@ input[type=password]:not(.browser-default):focus:not([readonly]) + label{
   font-size: 20px;
 }
 .floating_button {
-  
   z-index: 50;
-  top: 20px;
-  left: 15% !important;
+  position: relative !important;
+  display: inline block;
+  list-style-type: none
  }
 
  .fab {
@@ -91,4 +91,32 @@ input[type=password]:not(.browser-default):focus:not([readonly]) + label{
   position: relative !important;
   margin-left: 210px;
   z-index: 15;
+}
+
+.item_card{
+  margin-bottom: 10px !important;
+  padding: 0 !important;
+}
+.class{
+  margin-left: 100px;
+}
+#submit{
+  margin-right: 10px;
+  margin-top: 10px;
+  margin-bottom: 10px;
+  margin-left: 10px;
+}
+#cancel{
+  margin-top:10px;
+  margin-bottom: 10px;
+}
+.my_buttons{
+  margin-left: 33%
+}
+#edit_item_header{
+  margin-bottom: 120px;
+}
+#the_id_thing{
+  height: 20px;
+  text-align: center;
 }

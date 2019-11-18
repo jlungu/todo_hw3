@@ -18,11 +18,15 @@ class ItemsList extends React.Component {
   state = {
     newElement: false,
     todoList: this.props.todoList.items,
-    sortingCriteria: null
+    sortingCriteria: null,
+    refresh: false,
   };
+
   handleNewElement = () => {
     this.setState({ newElement: true });
   };
+
+
 
   sortByTask = () => {
     if (this.state.sortingCriteria === SortingCriteria.TASK_INCREASING)
@@ -155,23 +159,29 @@ class ItemsList extends React.Component {
         />
       );
     }
+
+    if (this.state.refresh){
+      return <Redirect to={'/todoList/' + this.props.todoList.id} key={this.props.todoList.id}/>;
+    }
+
     return (
+      
       <div className="todo-lists section">
         <nav>
           <div class="nav-wrapper red">
             <ul id="nav-mobile" class="center hide-on-med-and-down">
               <li>
-                <span id="header_type" onClick={this.sortByTask}>
+                <span  id="header_type" onClick={this.sortByTask}>
                   Task
                 </span>
               </li>
               <li>
-              <span id="header_type" onClick={this.sortByDueDate}>
+              <span class="header" id="header_type_due" onClick={this.sortByDueDate}>
                   Due Date
                 </span>
               </li>
               <li>
-              <span id="header_type" onClick={this.sortByStatus}>
+              <span class="header" id="header_type_complete" onClick={this.sortByStatus}>
                   Completed
                 </span>
               </li>

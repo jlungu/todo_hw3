@@ -49,11 +49,10 @@ export function createTodoListError(error) {
     }
 }
 // CREATE TODO LIST ITEMS
-export function createTodoListItem(todoList, item) {
+export function createTodoListItem(todoLists) {
     return {
         type: 'CREATE_TODO_LIST_ITEM',
-        todoList,
-        item
+        todoLists
     }
 }
 export function createTodoListItemError(error) {

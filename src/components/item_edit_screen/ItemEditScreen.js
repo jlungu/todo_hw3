@@ -50,7 +50,7 @@ class ItemEditScreen extends Component {
   };
 
   updateCompleted = e => {
-      this.setState({ completed: e.target.checked });
+    this.setState({ completed: e.target.checked });
   };
 
   returnToList = () => {
@@ -62,7 +62,11 @@ class ItemEditScreen extends Component {
     let newItems = this.props.todoList.items;
     let item = {};
     const key = this.props.match.params.key;
-    if (this.state.assigned_to === "" || this.state.description === "" || this.state.due_date === "" ){
+    if (
+      this.state.assigned_to === "" ||
+      this.state.description === "" ||
+      this.state.due_date === ""
+    ) {
       return;
     }
     if (this.props.match.params.key != this.props.todoList.items.length) {
@@ -70,8 +74,7 @@ class ItemEditScreen extends Component {
       newItems[key].description = this.state.description;
       newItems[key].due_date = this.state.due_date;
       newItems[key].completed = this.state.completed;
-    }
-    else {
+    } else {
       item.assigned_to = this.state.assigned_to;
       item.description = this.state.description;
       item.due_date = this.state.due_date;
@@ -90,72 +93,89 @@ class ItemEditScreen extends Component {
     if (this.state.editList == false) {
       return <Redirect to={"/todoList/" + todoList.id} />;
     }
-    return (      
-      <div className="container white">
-        <h5 className="grey-text text-darken-3">Edit Item</h5>
-        <div class="input-field col s6">
-          <input
-            className="active"
-            type="text"
-            name="assigned_to"
-            id="assigned_to"
-            defaultValue={this.state.assigned_to}
-            onChange={this.updateAssignedTo}
-          />
-          <label class="active" for="assigned_to">
-            Assigned To
-          </label>
-        </div>
-        <div class="input-field col s6">
-          <input
-            className="active"
-            type="text"
-            name="description"
-            id="description"
-            defaultValue={this.state.description}
-            onChange={this.updateDescription}
-          />
-          <label class="active" for="description">
-            Description
-          </label>
-        </div>
-        <div class="input-field col s6">
-          <input
-            class="datepicker"
-            type="date"
-            name="due_date"
-            id="due_date"
-            defaultValue={this.state.due_date}
-            onChange={this.updateDueDate}
-          />
-          <label class="active" for="due_date">
-            Due Date
-          </label>
-        </div>
-        <div>
-          <label>
-            <input
-              type="checkbox"
-              class="filled-in"
-              defaultChecked={this.state.completed}
-              onChange={this.updateCompleted}
-            />
-            <span>Completed</span>
-          </label>
-        </div>
-        <div>
-          <button
-            class="btn waves-effect waves-light"
-            type="submit"
-            name="action"
-            onClick={this.handleSubmit}
+    return (
+      <div className="container">
+        <div className="card z-depth-0 todo-list-link pink-lighten-3 blue lighten-5">
+          <div
+            className="card z-depth-1 todo-list-link pink-lighten-3 blue"
+            id="edit_header"
           >
-            Submit
-            <i class="material-icons right">send</i>
-          </button>
-          <a class="waves-effect waves-light btn" onClick={this.returnToList}>
-            Cancel
-          </a>
+            <div class="card-content white-text" id="the_id_thing">
+              <span id="edit_item_header">Modift/Add Item</span>
+            </div>
+          </div>
+          <div class="row">
+            <div class="input-field col s6">
+              <input
+                className="active"
+                type="text"
+                name="assigned_to"
+                id="assigned_to"
+                defaultValue={this.state.assigned_to}
+                onChange={this.updateAssignedTo}
+              />
+              <label class="active" for="assigned_to">
+                Assigned To
+              </label>
+            </div>
+            <div class="input-field col s6">
+              <input
+                className="active"
+                type="text"
+                name="description"
+                id="description"
+                defaultValue={this.state.description}
+                onChange={this.updateDescription}
+              />
+              <label class="active" for="description">
+                Description
+              </label>
+            </div>
+            <div class="input-field col s6">
+              <input
+                class="datepicker"
+                type="date"
+                name="due_date"
+                id="due_date"
+                defaultValue={this.state.due_date}
+                onChange={this.updateDueDate}
+              />
+              <label class="active" for="due_date">
+                Due Date
+              </label>
+            </div>
+            <div>
+              <label>
+                <input
+                  type="checkbox"
+                  class="filled-in"
+                  defaultChecked={this.state.completed}
+                  onChange={this.updateCompleted}
+                />
+                <span>Completed</span>
+              </label>
+            </div>
+          </div>
+          <div class="my_buttons">
+            <button
+              class="btn-large waves-effect blue waves-light"
+              id="submit"
+              type="submit"
+              name="action"
+              onClick={this.handleSubmit}
+            >
+              Submit
+              <i class="material-icons right">send</i>
+            </button>
+            <a
+              class="waves-effect waves-light btn-large blue"
+              id="cancel"
+              onClick={this.returnToList}
+            >
+              <i class="material-icons right">close</i>
+              Cancel
+            </a>
+          </div>
         </div>
       </div>
     );

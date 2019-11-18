@@ -9,6 +9,7 @@ import firebase from '../config/firebaseConfig';
 import rootReducer from './reducers/rootReducer';
 import App from '../App';
 
+
 class ReactReduxFirebaseApp extends React.Component {
     constructor(props) {
         super(props);
@@ -35,12 +36,13 @@ class ReactReduxFirebaseApp extends React.Component {
             firebase,
             config: rrfConfig,
             dispatch: store.dispatch,
-            createFirestoreInstance, // Create firestore instead of craete it in fbConfig.js
+            createFirestoreInstance, // Create firestore instead of craete it in fbConfig.js,
+            todoLists: null,
         };
 
         this.state = {
             store: store,
-            rrfProps: rrfProps
+            rrfProps: rrfProps,
         }
     }
 
