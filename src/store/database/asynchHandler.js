@@ -1,5 +1,6 @@
 import * as actionCreators from '../actions/actionCreators.js'
 
+
 export const loginHandler = ({ credentials, firebase }) => (dispatch, getState) => {
     firebase.auth().signInWithEmailAndPassword(
       credentials.email,//returns a promise, and you can wait on it before proceeding. Calls the function when it completes.
@@ -36,17 +37,17 @@ export const registerHandler = (newUser, firebase) => (dispatch, getState, { get
 
 
 //Creating a new TodoList, and adding it to our database.
-export const createNewListHandler = (firebase) => (dispatch, getState, {getFirestore}) => {
+export const createNewListHandler = (todoList, id, firebase) => (dispatch, getState, {getFirestore}) => {
     const firestore = getFirestore();
-    firestore.collection('todoLists').add({
-        name: "Unknown",
-        owner: "Unknown",
-        items: [],
-    }).then(function(docRef){console.log("Newly Created Document ID: " + docRef.id)}).then(() => {
-      dispatch(actionCreators.createTodoList);
-    }).catch((err) => {
+    firestore.collection('todoLists').doc(id).set({
+        name: todoList.name,
+        owner: todoList.owner,
+        items: todoList.items,
+    }).then(function(docRef) {id = docRef.id}).then(() => {dispatch(actionCreators.createTodoList(todoList, id))}).catch((err) => {
       dispatch({ type: 'CREATE_TODO_LIST_ERROR', err });
     });
+
+    firestore.collection('todoLists').orderBy("name").limit(3);
 };
 
 export const editNameHandler = (newName, id, firebase) => (dispatch, getState, {getFirestore}) => {
@@ -72,9 +73,20 @@ export const editNameHandler = (newName, id, firebase) => (dispatch, getState, {
     const firestore = getFirestore();
     firestore.collection('todoLists').doc(id).update({
       items: newItems,
-    }).catch((err) => {
+    }).then(() => {
+      dispatch({ type: 'CREATE_TODO_LIST' });
+  }).catch((err) => {
       dispatch({ type: 'CREATE_TODO_LIST_ERROR', err });
     });
   }
+
+  export const deleteListHandler = (id, firebase) => (dispatch, getState, {getFirestore}) => {
+    const firestore = getFirestore();
+    firestore.collection('todoLists').doc(id).delete().then(function() {
+      console.log("Document with id " + id + " successfully deleted!");
+  }).catch((err) => {
+      dispatch({ type: 'CREATE_TODO_LIST_ERROR', err });
+    });
+};
 
   

@@ -139,6 +139,10 @@ class ItemsList extends React.Component {
     }
   }
 
+  refreshList = () => {
+    this.forceUpdate();
+  }
+
   render() {
     const todoList = this.props.todoList;
     const items = this.state.todoList;

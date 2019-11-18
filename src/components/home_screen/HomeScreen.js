@@ -8,13 +8,27 @@ import TodoListLinks from "./TodoListLinks";
 import { createNewListHandler } from "../../store/database/asynchHandler";
 
 class HomeScreen extends Component {
+  state ={
+    newList: false,
+    id: null,
+  }
   handleSubmit = e => {
     e.preventDefault();
 
     const { props, state, firestore } = this;
-    this.props.firestore.collection("todoLists").onUpdate(console.log("updated"))
 
-    props.newList();
+    let todoList = {
+      name: "Unknown",
+      owner: "Unknown",
+      items: [],
+    }
+
+    const db = this.props.firebase.firestore();
+    const ref = db.collection('todoLists').doc();
+    let id = ref.id;
+    this.props.newList(todoList, id);
+    this.setState({id: id})
+    this.setState({newList: true});
   };
 
 
@@ -22,7 +36,9 @@ class HomeScreen extends Component {
     if (!this.props.auth.uid) {
       return <Redirect to="/login" />;
     }
-
+    if (this.state.newList){
+      return <Redirect to={'/todoList/' + this.state.id} key={this.state.id}/>;
+    }
   
 
     return (
@@ -60,12 +76,13 @@ class HomeScreen extends Component {
 const mapStateToProps = state => {
   return {
     auth: state.firebase.auth,
-    todoLists: state.firestore.ordered.todoLists
+    todoLists: state.firestore.ordered.todoLists,
+    id: state.newId,
   };
 };
 
-const mapDispatchToProps = dispatch => ({
-  newList: firebase => dispatch(createNewListHandler(firebase))
+const mapDispatchToProps = (dispatch, todoList, id) => ({
+  newList: (todoList, id, firebase) => dispatch(createNewListHandler(todoList, id, firebase))
 });
 
 export default compose(

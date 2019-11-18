@@ -1,40 +1,31 @@
 import React, { Component } from "react";
 import M from "materialize-css";
+import { Redirect } from "react-router-dom";
 import "materialize-css/dist/css/materialize.min.css";
-
+import { firestoreConnect } from "react-redux-firebase";
+import { connect } from "react-redux";
+import { compose } from "redux";
+import { deleteListHandler } from "../../store/database/asynchHandler";
 
 class DeleteListModal extends Component {
+  state = {
+    deletedList: false,
+  }
     componentDidMount() {
-        const options = {
-          onOpenStart: () => {
-            console.log("Open Start");
-          },
-          onOpenEnd: () => {
-            console.log("Open End");
-          },
-          onCloseStart: () => {
-            console.log("Close Start");
-          },
-          onCloseEnd: () => {
-            console.log("Close End");
-          },
-          inDuration: 250,
-          outDuration: 250,
-          opacity: 0.5,
-          dismissible: false,
-          startingTop: "4%",
-          endingTop: "10%"
-        };
-        M.Modal.init(this.Modal, options);
-    
-        // let instance = M.Modal.getInstance(this.Modal);
-        // instance.open();
-        // instance.close();
-        // instance.destroy();
+        M.Modal.init(this.Modal);
       }
-    
+
+      handleDelete = () => {
+        console.log(this.props.id);
+        this.setState({deletedList: true});
+        this.props.deleteList(this.props.id, this.props.firebase);
+      }
       render() {
+        if (this.state.deletedList){
+          return <Redirect to="/" />;
+        }
         return (
+          
           <div>
             <div
               ref={Modal => {
@@ -43,20 +34,16 @@ class DeleteListModal extends Component {
               id="modal1"
               className="modal"
             >
-              {/* If you want Bottom Sheet Modal then add 
-                            bottom-sheet class to the "modal" div
-                            If you want Fixed Footer Modal then add
-                            modal-fixed-footer to the "modal" div*/}
               <div className="modal-content">
-                <h4>Modal Header</h4>
-                <p>A bunch of text</p>
+                <h4>Delete List</h4>
+                <p>Are you sure you want to delete this list? This action cannot be undone.</p>
               </div>
               <div className="modal-footer">
                 <a className="modal-close waves-effect waves-red btn-flat">
-                  DIBABBREE
+                  No I Dont!
                 </a>
-                <a className="modal-close waves-effect waves-green btn-flat">
-                  Agree
+                <a className="modal-close waves-effect waves-green btn-flat" onClick={this.handleDelete}>
+                   Yes, Delete It!
                 </a>
               </div>
             </div>
@@ -65,4 +52,22 @@ class DeleteListModal extends Component {
       }
     }
 
-export default DeleteListModal;
+    const mapStateToProps = (state) => {
+      const { todoLists } = state.firestore.data;
+    
+      return {
+        auth: state.firebase.auth
+      };
+    };
+    
+    const mapDispatchToProps = (dispatch, id) => ({
+      deleteList: (id, firebase) =>
+      dispatch(deleteListHandler(id, firebase)),
+    });
+    
+    export default compose(
+      connect(mapStateToProps, mapDispatchToProps),
+      firestoreConnect([{ collection: "todoLists" }])
+    )(DeleteListModal);
+
+    

@@ -11,6 +11,12 @@ export const REGISTER_ERROR = 'REGISTER_ERROR';
 export const LOGIN_SUCCESS = 'LOGIN_SUCCESS';
 export const LOGIN_ERROR = 'LOGIN_ERROR';
 export const LOGOUT_SUCCESS = 'LOGOUT_SUCCESS';
+export const CREATE_TODO_LIST = 'CREATE_TODO_LIST';
+export const CREATE_TODO_LIST_ERROR = 'CREATE_TODO_LIST_ERROR';
+export const CREATE_TODO_LIST_ITEM = 'CREATE_TODO_LIST_ITEM';
+export const CREATE_TODO_LIST_ITEM_ERROR = 'CREATE_TODO_LIST_ITEM_ERROR';
+export const EDIT_TODO_LIST_ITEM = 'LOGOUT_SUCCESS';
+export const EDIT_TODO_LIST_ITEM_ERROR = 'LOGOUT_SUCCESS';
 
 // THESE CREATORS MAKE ACTIONS ASSOCIATED WITH USER ACCOUNTS
 
@@ -31,10 +37,9 @@ export function logoutSuccess() {
 };
 
 // THESE CREATORS MAKE ACTIONS FOR ASYNCHRONOUS TODO LIST UPDATES
-export function createTodoList(todoList) {
+export function createTodoList() {
     return {
         type: 'CREATE_TODO_LIST',
-        todoList
     }
 }
 export function createTodoListError(error) {
@@ -43,3 +48,34 @@ export function createTodoListError(error) {
         error
     }
 }
+// CREATE TODO LIST ITEMS
+export function createTodoListItem(todoList, item) {
+    return {
+        type: 'CREATE_TODO_LIST_ITEM',
+        todoList,
+        item
+    }
+}
+export function createTodoListItemError(error) {
+    return {
+        type: 'CREATE_TODO_LIST_ITEM_ERROR',
+        error
+    }
+}
+
+//EDITING TODO LIST ITEMS
+export function editTodoListItem(todoList, item) {
+    return {
+        type: 'EDIT_TODO_LIST_ITEM',
+        todoList,
+        item
+    }
+}
+export function editTodoListItemError(error) {
+    return {
+        type: 'EDIT_TODO_LIST_ITEM_ERROR',
+        error
+    }
+}
+
+

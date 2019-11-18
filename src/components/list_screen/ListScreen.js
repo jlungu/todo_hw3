@@ -50,10 +50,12 @@ class ListScreen extends Component {
     if (!auth.uid) {
       return <Redirect to="/" />;
     }
+    if(!todoList)
+	      return <React.Fragment />
 
     return (
       <div className="container white">
-        <DeleteListModal />
+        <DeleteListModal id={this.props.todoList.id}/>
         <div class="row">
           <h5 className="grey-text text-darken-3 col s2">Todo List</h5>
           <a
@@ -102,7 +104,8 @@ const mapStateToProps = (state, ownProps) => {
   const { id } = ownProps.match.params;
   const { todoLists } = state.firestore.data;
   const todoList = todoLists ? todoLists[id] : null;
-  todoList.id = id;
+  if(todoList)
+	todoList.id = id;
 
   return {
     todoList,
@@ -115,8 +118,6 @@ const mapDispatchToProps = (dispatch, newItem) => ({
     dispatch(editNameHandler(newItem, id, firebase)),
   editOwner: (newItem, id, firebase) =>
     dispatch(editOwnerHandler(newItem, id, firebase))
-  //submitItemChange: (id, newItemsList, firebase) =>
-  //dispatch(submitItemChangeHandler(id, newItems, firebase))
 });
 
 export default compose(

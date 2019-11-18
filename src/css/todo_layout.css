@@ -61,10 +61,15 @@ input[type=password]:not(.browser-default):focus:not([readonly]) + label{
   font-size: 20px;
 }
 .floating_button {
-  position: relative !important;
+  
   z-index: 50;
   top: 20px;
   left: 15% !important;
+ }
+
+ .fab {
+   position: relative !important;
+   margin-bottom: 50px !important;
  }
  .delete_but{
    float:right !important;
@@ -72,3 +77,18 @@ input[type=password]:not(.browser-default):focus:not([readonly]) + label{
   margin-right: 2%;
    z-index: 20;
  }
+ #move_up{
+  position: relative !important;
+   margin-left: 70px;
+   z-index:5;
+ }
+ #move_down{
+  position: relative !important;
+  margin-left: 140px;
+  z-index: 10;
+}
+#delete{
+  position: relative !important;
+  margin-left: 210px;
+  z-index: 15;
+}
