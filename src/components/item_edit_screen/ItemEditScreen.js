@@ -8,7 +8,7 @@ import { submitItemChangeHandler } from "../../store/database/asynchHandler";
 
 class ItemEditScreen extends Component {
   state = {
-    item: "this.props.todoList.items[this.props.match.params.key]",
+    item: this.props.todoList.items[this.props.match.params.key],
     editList: true,
     newItem: false,
     description: "",
