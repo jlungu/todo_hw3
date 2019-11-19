@@ -62,6 +62,7 @@ class ItemEditScreen extends Component {
 
   updateCompleted = e => {
     this.setState({ completed: e.target.checked });
+    console.log(this.props.todoList.items[this.props.match.params.key].completed)
   };
 
   returnToList = () => {
@@ -117,7 +118,7 @@ class ItemEditScreen extends Component {
             id="edit_header"
           >
             <div class="card-content white-text" id="the_id_thing">
-              <span id="edit_item_header">Modift/Add Item</span>
+              <span id="edit_item_header">Modify/Add Item</span>
             </div>
           </div>
           <div class="row">
@@ -174,7 +175,9 @@ class ItemEditScreen extends Component {
                 <input
                   type="checkbox"
                   class="filled-in"
-                  defaultChecked={this.state.completed}
+                  defaultChecked={ this.props.match.params.key != this.props.todoList.items.length
+                    ? this.props.todoList.items[this.props.match.params.key].completed
+                    : false}
                   onChange={this.updateCompleted}
                 />
                 <span>Completed</span>
