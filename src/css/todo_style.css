@@ -39,17 +39,36 @@ div.banner {
   box-shadow: 1px 2px;
 }
 #header_type {
+  position: absolute;
   margin-left: 80px;
   font-size: 25px;
+  font-weight: normal;
+}
+
+#header_type:hover {
+  font-weight: 600;
+  cursor: pointer;
 }
 
 #header_type_due {
-  margin-left: 155px;
+  position: absolute;
+  margin-left: 34%;
   font-size: 25px;
+  font-weight: normal;
+}
+#header_type_due:hover {
+  font-weight: 600;
+  cursor: pointer;
 }
 #header_type_complete {
-  margin-left: 30px;
+  position: absolute;
+  margin-left: 51%;
   font-size: 25px;
+  font-weight: normal;
+}
+#header_type_complete:hover {
+  font-weight: 600;
+  cursor: pointer;
 }
 .input-field label {
   color: purple;
