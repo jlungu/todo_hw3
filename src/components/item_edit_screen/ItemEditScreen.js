@@ -62,7 +62,7 @@ class ItemEditScreen extends Component {
 
   updateCompleted = e => {
     this.setState({ completed: e.target.checked });
-    console.log(this.props.todoList.items[this.props.match.params.key].completed)
+    //console.log(this.props.todoList.items[this.props.match.params.key].completed)
   };
 
   returnToList = () => {
