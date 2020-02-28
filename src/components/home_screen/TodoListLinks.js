@@ -46,7 +46,7 @@ class TodoListLinks extends React.Component {
 
   render() {
     let todoLists = {};
-    //console.log(this.props.firstTodo);
+    console.log(this.props.todoLists);
     if (this.props.firstTodo === null)
         todoLists = this.props.todoLists;
     else{
@@ -68,6 +68,7 @@ class TodoListLinks extends React.Component {
 }
 
 const mapStateToProps = state => {
+  console.log("in map state to props")
   return {
     todoLists: state.firestore.ordered.todoLists,
     auth: state.firebase.auth

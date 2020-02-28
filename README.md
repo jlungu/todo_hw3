@@ -1,3 +1,13 @@
+Project for CSE 316 - Fundamentals of Software Development
+Given some base code, we were tasked with generating a visually-apealing online ToDo list, with tasks stored in a database for retrieval anytime. Users may generate new lists, modify existing lists by moving around tasks, and delete lists. 
+
+
+Coded with JavaScript/React.js/Redux, using Materialize-CSS libraries.
+
+Things I am currently working on:
+- Modifying start screen, as the green "TODO LIST" logo is atrocious.
+- General Bug fixes, little things here an there. I.e. weird bug with Materialize buttons, when you click them they start to turn white.
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 ## Available Scripts
